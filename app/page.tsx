@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Hero from "@/components/home/hero";
+import WorkoutCard from "@/components/home/workout-card";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 import { getAllWorkouts } from "@/lib/api";
 import { Workout } from "@/types";
@@ -46,9 +47,11 @@ export default function Home() {
         )}
 
         {!loading && !error && (
-          <p className="text-gray-500">
-            {workouts.length} workouts loaded. Cards coming in Commit 4.
-          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {workouts.map((workout) => (
+              <WorkoutCard key={workout.id} workout={workout} />
+            ))}
+          </div>
         )}
       </section>
     </main>

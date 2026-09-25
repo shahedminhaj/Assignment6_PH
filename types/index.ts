@@ -1,29 +1,29 @@
 export type Workout = {
-  id: string | number;
+  id: number;
   name: string;
-  description: string;
-  category: string[];
-  equipment: string[];
+  image: string;
+  muscleGroups: string[];
+  equipment: string;
   difficulty: string;
+  duration: number;
+  caloriesBurned: number;
   sets: number;
   reps: string;
-  duration: number;   // minutes
-  calories: number;   // kcal
   rating: number;
-  image: string;
+  description: string;
   instructions: string[];
 };
 
 export type FitLogState = {
   plan: Workout[];
   saved: Workout[];
-  done: string[];   // array of workout IDs marked as done
+  done: number[];
   addToPlan: (workout: Workout) => boolean;
-  removeFromPlan: (id: string | number) => void;
-  markAsDone: (id: string | number) => void;
+  removeFromPlan: (id: number) => void;
+  markAsDone: (id: number) => void;
   saveForLater: (workout: Workout) => void;
-  removeSaved: (id: string | number) => void;
-  isInPlan: (id: string | number) => boolean;
-  isSaved: (id: string | number) => boolean;
-  isDone: (id: string | number) => boolean;
+  removeSaved: (id: number) => void;
+  isInPlan: (id: number) => boolean;
+  isSaved: (id: number) => boolean;
+  isDone: (id: number) => boolean;
 };

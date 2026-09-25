@@ -11,16 +11,14 @@ import {
 import { Workout, FitLogState } from "@/types";
 
 const FitLogContext = createContext<FitLogState | null>(null);
-
 const STORAGE_KEY = "fitlog-state";
 
 export function FitLogProvider({ children }: { children: ReactNode }) {
   const [plan, setPlan] = useState<Workout[]>([]);
   const [saved, setSaved] = useState<Workout[]>([]);
-  const [done, setDone] = useState<string[]>([]);
+  const [done, setDone] = useState<number[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
-  // Load from localStorage on mount
   useEffect(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -36,7 +34,6 @@ export function FitLogProvider({ children }: { children: ReactNode }) {
     setHydrated(true);
   }, []);
 
-  // Save to localStorage whenever state changes
   useEffect(() => {
     if (!hydrated) return;
     try {
@@ -50,59 +47,51 @@ export function FitLogProvider({ children }: { children: ReactNode }) {
   }, [plan, saved, done, hydrated]);
 
   const isInPlan = useCallback(
-    (id: string | number) => plan.some((w) => String(w.id) === String(id)),
+    (id: number) => plan.some((w) => w.id === id),
     [plan]
   );
 
   const isSaved = useCallback(
-    (id: string | number) => saved.some((w) => String(w.id) === String(id)),
+    (id: number) => saved.some((w) => w.id === id),
     [saved]
   );
 
   const isDone = useCallback(
-    (id: string | number) => done.includes(String(id)),
+    (id: number) => done.includes(id),
     [done]
   );
 
   const addToPlan = useCallback(
     (workout: Workout): boolean => {
-      if (plan.length >= 5) {
-        return false; // Cap reached
-      }
-      if (plan.some((w) => String(w.id) === String(workout.id))) {
-        return false; // Already in plan
-      }
+      if (plan.length >= 5) return false;
+      if (plan.some((w) => w.id === workout.id)) return false;
       setPlan((prev) => [...prev, workout]);
       return true;
     },
     [plan]
   );
 
-  const removeFromPlan = useCallback((id: string | number) => {
-    setPlan((prev) => prev.filter((w) => String(w.id) !== String(id)));
-    setDone((prev) => prev.filter((d) => d !== String(id)));
+  const removeFromPlan = useCallback((id: number) => {
+    setPlan((prev) => prev.filter((w) => w.id !== id));
+    setDone((prev) => prev.filter((d) => d !== id));
   }, []);
 
-  const markAsDone = useCallback((id: string | number) => {
+  const markAsDone = useCallback((id: number) => {
     setDone((prev) =>
-      prev.includes(String(id))
-        ? prev.filter((d) => d !== String(id))
-        : [...prev, String(id)]
+      prev.includes(id) ? prev.filter((d) => d !== id) : [...prev, id]
     );
   }, []);
 
   const saveForLater = useCallback(
     (workout: Workout) => {
-      if (saved.some((w) => String(w.id) === String(workout.id))) {
-        return;
-      }
+      if (saved.some((w) => w.id === workout.id)) return;
       setSaved((prev) => [...prev, workout]);
     },
     [saved]
   );
 
-  const removeSaved = useCallback((id: string | number) => {
-    setSaved((prev) => prev.filter((w) => String(w.id) !== String(id)));
+  const removeSaved = useCallback((id: number) => {
+    setSaved((prev) => prev.filter((w) => w.id !== id));
   }, []);
 
   return (
@@ -128,8 +117,6 @@ export function FitLogProvider({ children }: { children: ReactNode }) {
 
 export function useFitLog() {
   const ctx = useContext(FitLogContext);
-  if (!ctx) {
-    throw new Error("useFitLog must be used inside FitLogProvider");
-  }
+  if (!ctx) throw new Error("useFitLog must be used inside FitLogProvider");
   return ctx;
 }
