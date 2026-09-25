@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { useFitLog } from "@/context/fitlog-context";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { plan, saved } = useFitLog();
   const isActive = (path: string) => pathname === path;
 
   return (
@@ -94,7 +96,7 @@ export default function Navbar() {
         </ul>
       </div>
 
-      {/* RIGHT: Status Badges (Static for Commit 1) */}
+      {/* RIGHT: Status Badges (Dynamic from Context) */}
       <div className="navbar-end gap-2">
         <Link
           href="/my-plan"
@@ -102,7 +104,7 @@ export default function Navbar() {
         >
           Plan{" "}
           <span className="ml-1 bg-black text-accent rounded-full px-2 py-0.5 text-xs">
-            0
+            {plan.length}
           </span>
         </Link>
         <Link
@@ -111,7 +113,7 @@ export default function Navbar() {
         >
           Saved{" "}
           <span className="ml-1 bg-gray-800 rounded-full px-2 py-0.5 text-xs">
-            0
+            {saved.length}
           </span>
         </Link>
       </div>
