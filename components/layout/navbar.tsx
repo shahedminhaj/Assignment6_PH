@@ -11,8 +11,7 @@ export default function Navbar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <div className="navbar bg-base-100 shadow-sm border-b border-white/10 px-4 lg:px-8">
-      {/* LEFT: Mobile Dropdown & Logo */}
+    <div className="navbar bg-base-100 border-b border-white/10 px-4 lg:px-8 sticky top-0 z-50">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -34,17 +33,20 @@ export default function Navbar() {
           </div>
           <ul
             tabIndex={-1}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[60] mt-3 w-52 p-2 shadow-lg border border-white/10"
           >
             <li>
-              <Link href="/" className={isActive("/") ? "text-accent" : ""}>
+              <Link
+                href="/"
+                className={isActive("/") ? "text-accent font-bold" : ""}
+              >
                 Workouts
               </Link>
             </li>
             <li>
               <Link
                 href="/my-plan"
-                className={isActive("/my-plan") ? "text-accent" : ""}
+                className={isActive("/my-plan") ? "text-accent font-bold" : ""}
               >
                 My Plan
               </Link>
@@ -54,7 +56,7 @@ export default function Navbar() {
 
         <Link
           href="/"
-          className="btn btn-ghost text-xl flex items-center gap-2 hover:bg-transparent"
+          className="btn btn-ghost text-xl flex items-center gap-2 hover:bg-transparent px-2"
         >
           <Image
             src="/assets/logo.png"
@@ -66,17 +68,16 @@ export default function Navbar() {
         </Link>
       </div>
 
-      {/* CENTER: Desktop Menu */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 gap-4">
+        <ul className="menu menu-horizontal px-1 gap-6">
           <li>
             <Link
               href="/"
-              className={
+              className={`text-sm uppercase tracking-widest font-semibold transition-colors ${
                 isActive("/")
-                  ? "text-accent font-bold"
+                  ? "text-accent"
                   : "text-gray-300 hover:text-white"
-              }
+              }`}
             >
               Workouts
             </Link>
@@ -84,11 +85,11 @@ export default function Navbar() {
           <li>
             <Link
               href="/my-plan"
-              className={
+              className={`text-sm uppercase tracking-widest font-semibold transition-colors ${
                 isActive("/my-plan")
-                  ? "text-accent font-bold"
+                  ? "text-accent"
                   : "text-gray-300 hover:text-white"
-              }
+              }`}
             >
               My Plan
             </Link>
@@ -96,23 +97,23 @@ export default function Navbar() {
         </ul>
       </div>
 
-      {/* RIGHT: Status Badges (Dynamic from Context) */}
       <div className="navbar-end gap-2">
         <Link
           href="/my-plan"
-          className="badge badge-lg bg-accent text-black font-bold border-none"
+          className="flex items-center gap-2 text-white font-bold text-xs md:text-sm px-3 py-3"
         >
-          Plan{" "}
-          <span className="ml-1 bg-black text-accent rounded-full px-2 py-0.5 text-xs">
+          <span>Plan</span>
+          <span className="bg-accent text-black rounded-full w-5 h-5 flex items-center justify-center text-[10px] font-bold">
             {plan.length}
           </span>
         </Link>
+
         <Link
           href="/my-plan"
-          className="badge badge-lg badge-outline text-white border-gray-600"
+          className="badge badge-lg badge-outline text-white border-gray-600 font-bold text-xs md:text-sm px-3 py-3 gap-2"
         >
-          Saved{" "}
-          <span className="ml-1 bg-gray-800 rounded-full px-2 py-0.5 text-xs">
+          <span>Saved</span>
+          <span className="bg-white/10 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] font-bold">
             {saved.length}
           </span>
         </Link>
