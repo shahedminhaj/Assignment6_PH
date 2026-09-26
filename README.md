@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FitLog
 
-## Getting Started
+## Description
 
-First, run the development server:
+FitLog is a dark, no-nonsense gym companion built with Next.js. It lets users browse a workout library, view detailed workout pages, and manage a daily plan (up to five lifts) along with a save-for-later list. All state is persisted in localStorage, providing a seamless experience across page reloads.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Technologies Used
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Next.js 15 (App Router)
+- TypeScript
+- Tailwind CSS v4
+- DaisyUI
+- React Context API
+- localStorage
+- Next.js Font Optimization (Oswald, Inter)
+- FitLog API
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Key Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Workout Library - Browse 12 workouts in a responsive 3-column grid with category tags, equipment, and live stats.
+2. Detailed Workout Pages - Each workout has a dedicated page with a hero image, spec table, and step-by-step instructions.
+3. Today's Plan (Max 5 Lifts) - Add up to five workouts to a daily plan; exercise count, minutes, and calories update live.
+4. Save for Later - Bookmark workouts for future sessions, separated in their own tab on the My Plan page.
+5. Mark as Done, Sort, and Remove - Mark workouts complete, sort by duration, calories, or rating, and remove with a single click.
+6. Persistent State - Plan, saved, and done lists survive page reloads through localStorage.
+7. Fully Responsive - Mobile hamburger menu and adaptive grids across mobile, tablet, and desktop.
+8. Toast Notifications - Feedback on every action including add, save, mark done, and remove.
